@@ -12,6 +12,18 @@ Given /the following comments exist/ do |comments_table|
   end
 end
 
+
+
+Given /the following categories exist/ do |categories_table|
+  categories_table.hashes.each do |category|
+    article = Article.find_by_title(category[:title])
+    article.categories.build(:name => category[:name], 
+                             :permalink => category[:permalink],
+                             :position => category[:position])
+    article.save
+  end
+end
+
 And /I merge "(.*)" and "(.*)"/ do |article_1, article_2|
   steps %Q{
     
